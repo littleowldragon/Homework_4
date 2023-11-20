@@ -1,15 +1,16 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <raygui.h>
-
 #include <iostream>
 #include <string>
 #include <vector>
 
 #define RAYGUI_IMPLEMENTATION
+
 // Generic UI component
 struct UIComponent
 {
+    
     // Rectangle reprsenting the bounds of the UI component
     Rectangle bounds;
 
@@ -66,11 +67,15 @@ struct UIContainer : public UIComponent
     }
 };
 
-// Button widget
+
+
+
 struct Button : public UIComponent
 {
+    
     // Text displayed by the button
     std::string text;
+
 
     // Draw
     void Draw() override
@@ -84,17 +89,20 @@ struct Button : public UIComponent
     // Returns a boolean indicating whether this UI component successfully handled the event
     bool HandleClick(Vector2 click_position) override
     {
-        
         // Check if the mouse click position is within our bounds
         if (CheckCollisionPointRec(click_position, bounds))
         {
-            std::cout << "Hello!" << std::endl;
+
+             std::cout << text << std::endl;  
             return true;
         }
 
         return false;
     }
 };
+
+// Button widget
+
 
 // Text display widget
 struct Label : public UIComponent
@@ -155,27 +163,37 @@ struct UILibrary
 
 int main()
 {
-    int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
-    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Retained Mode");
+
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);    
+    InitWindow(800, 600, "Retained Mode");
     SetTargetFPS(60);
 
     UILibrary ui_library;
     ui_library.root_container.bounds = { 10, 10, 600, 500 };
 
     Button button;
-    button.text = "Hello!";
+    button.text = "800x600";
     button.bounds = { 120, 10, 80, 40 };
     ui_library.root_container.AddChild(&button);
+    
 
     Button button2;
-    button2.text = "Hi!";
+    button2.text = "1280x720";
     button2.bounds = { 210, 10, 80, 40 };
     ui_library.root_container.AddChild(&button2);
 
+    Button button3;
+    button3.text = "1366x768";
+    button3.bounds = { 300, 10, 80, 40 };
+    ui_library.root_container.AddChild(&button3);
 
     Label label;
     label.bounds = { 10, 20, 100, 40 };
     ui_library.root_container.AddChild(&label);
+
+
+    bool LockScreen = true;
+
 
 
 
@@ -187,12 +205,16 @@ int main()
         ClearBackground(WHITE);
         BeginDrawing();
         ui_library.Draw();
-        if (label.checked==false){
-            label.text="[]Checkbox";
-        }
-        if (label.checked==true){
-            label.text="[X]Checkbox";
-            }
+         ClearBackground(RAYWHITE);
+
+        
+
+
+            if (LockScreen) DrawLine(500, 0, 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.6f));
+
+            GuiCheckBox((Rectangle){ 600, 320, 20, 20 }, "Lock Screen", &LockScreen);
+
+
         EndDrawing();
     }
 
