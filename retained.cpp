@@ -1,13 +1,11 @@
 #include <raylib.h>
 #include <raymath.h>
-
 #include <iostream>
 #include <string>
 #include <vector>
 
 #define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
-//g++ retained.cpp -o out -I src/ -L raylib/ -lraylib -lopengl32 -lgdi32 -lwinmm
+
 // Generic UI component
 struct UIComponent
 {
@@ -96,16 +94,13 @@ struct Button : public UIComponent
         {
 
              std::cout << text << std::endl;  
-
-             SetWindowSize(width, height);
+            SetWindowSize(width,height);
             return true;
         }
 
         return false;
     }
 };
-
-
 
 // Button widget
 
@@ -131,6 +126,13 @@ struct Label : public UIComponent
         // (unless you have to)
         if (CheckCollisionPointRec(click_position, bounds))
         {
+                if(checked == false){
+                    
+                checked=true;
+            }
+            else{
+                checked=false;
+            }
 
             return true;
         }
@@ -164,6 +166,7 @@ struct UILibrary
 int main()
 {
 
+
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);    
     InitWindow(800, 600, "Retained Mode");
     SetTargetFPS(60);
@@ -182,23 +185,22 @@ int main()
     button2.text = "1280x720";
     button2.bounds = { 210, 10, 80, 40 };
     ui_library.root_container.AddChild(&button2);
-    button2.width = 1280;
-    button2.height= 720;
+    button2.width=1280;
+    button2.height=720;
 
     Button button3;
     button3.text = "1366x768";
     button3.bounds = { 300, 10, 80, 40 };
     ui_library.root_container.AddChild(&button3);
-    button2.width = 1366;
-    button2.height= 768;
+    button3.width=1336;
+    button3.height=768;
 
     Label label;
-    label.text = "Resolution";
     label.bounds = { 10, 20, 100, 40 };
     ui_library.root_container.AddChild(&label);
 
 
-    bool LockScreen = false;
+
 
 
 
@@ -212,13 +214,14 @@ int main()
         BeginDrawing();
         ui_library.Draw();
          ClearBackground(RAYWHITE);
+         if(label.checked==true){
+            label.text="[ ]Lock Screen";
+         }
+         else{
+            label.text="[X]Lock Screen";
+         }
 
         
-
-
-            if (LockScreen) DrawLine(500, 0, 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.6f));
-            GuiCheckBox((Rectangle){ 10, 60, 30, 30 }, "Lock Screen", &LockScreen);
-
 
         EndDrawing();
     }
