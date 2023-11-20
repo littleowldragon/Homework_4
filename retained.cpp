@@ -1,12 +1,13 @@
 #include <raylib.h>
 #include <raymath.h>
-#include <raygui.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
 
 #define RAYGUI_IMPLEMENTATION
-
+#include "raygui.h"
+//g++ retained.cpp -o out -I src/ -L raylib/ -lraylib -lopengl32 -lgdi32 -lwinmm
 // Generic UI component
 struct UIComponent
 {
@@ -75,7 +76,8 @@ struct Button : public UIComponent
     
     // Text displayed by the button
     std::string text;
-
+    int width;
+    int height;
 
     // Draw
     void Draw() override
@@ -94,12 +96,16 @@ struct Button : public UIComponent
         {
 
              std::cout << text << std::endl;  
+
+             SetWindowSize(width, height);
             return true;
         }
 
         return false;
     }
 };
+
+
 
 // Button widget
 
@@ -125,12 +131,6 @@ struct Label : public UIComponent
         // (unless you have to)
         if (CheckCollisionPointRec(click_position, bounds))
         {
-                if(checked == false){
-                checked=true;
-            }
-            else{
-                checked=false;
-            }
 
             return true;
         }
@@ -175,24 +175,30 @@ int main()
     button.text = "800x600";
     button.bounds = { 120, 10, 80, 40 };
     ui_library.root_container.AddChild(&button);
-    
+    button.width = 800;
+    button.height= 600;
 
     Button button2;
     button2.text = "1280x720";
     button2.bounds = { 210, 10, 80, 40 };
     ui_library.root_container.AddChild(&button2);
+    button2.width = 1280;
+    button2.height= 720;
 
     Button button3;
     button3.text = "1366x768";
     button3.bounds = { 300, 10, 80, 40 };
     ui_library.root_container.AddChild(&button3);
+    button2.width = 1366;
+    button2.height= 768;
 
     Label label;
+    label.text = "Resolution";
     label.bounds = { 10, 20, 100, 40 };
     ui_library.root_container.AddChild(&label);
 
 
-    bool LockScreen = true;
+    bool LockScreen = false;
 
 
 
@@ -211,8 +217,7 @@ int main()
 
 
             if (LockScreen) DrawLine(500, 0, 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.6f));
-
-            GuiCheckBox((Rectangle){ 600, 320, 20, 20 }, "Lock Screen", &LockScreen);
+            GuiCheckBox((Rectangle){ 10, 60, 30, 30 }, "Lock Screen", &LockScreen);
 
 
         EndDrawing();
