@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include <raymath.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -93,8 +93,10 @@ struct Button : public UIComponent
         if (CheckCollisionPointRec(click_position, bounds))
         {
 
-             std::cout << text << std::endl;  
-            SetWindowSize(width,height);
+             std::cout << text << std::endl;
+            if(IsWindowState(FLAG_WINDOW_RESIZABLE) == 1){
+                SetWindowSize(width,height);
+            }
             return true;
         }
 
@@ -126,14 +128,16 @@ struct Label : public UIComponent
         // (unless you have to)
         if (CheckCollisionPointRec(click_position, bounds))
         {
-                if(checked == false){
-                    
+            if(checked == false){
+                ClearWindowState(FLAG_WINDOW_RESIZABLE);
+                std::cout << IsWindowState(FLAG_WINDOW_RESIZABLE);
                 checked=true;
             }
             else{
+                SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+                std::cout << IsWindowState(FLAG_WINDOW_RESIZABLE);
                 checked=false;
             }
-
             return true;
         }
         return false;
@@ -167,7 +171,7 @@ int main()
 {
 
 
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE);    
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);   
     InitWindow(800, 600, "Retained Mode");
     SetTargetFPS(60);
 
@@ -199,22 +203,17 @@ int main()
     label.bounds = { 10, 20, 100, 40 };
     ui_library.root_container.AddChild(&label);
 
-
-
-
-
-
-
-
     while (!WindowShouldClose())
     {
+        
+        std::cout << IsWindowState(FLAG_WINDOW_RESIZABLE); 
         ui_library.Update();
 
         ClearBackground(WHITE);
         BeginDrawing();
         ui_library.Draw();
          ClearBackground(RAYWHITE);
-         if(label.checked==true){
+         if(label.checked==false){
             label.text="[ ]Lock Screen";
          }
          else{
