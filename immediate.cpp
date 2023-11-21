@@ -1,5 +1,4 @@
 #include <raylib.h>
-#include <raymath.h>
 
 #include <functional>
 #include <iostream>
@@ -15,6 +14,7 @@ struct UiLibrary
     // ID of the currently active widget
     int active = -1;
 
+    Color color = GRAY;
     // Creates a button with the specified text and bounds
     // Returns true if this button was clicked in this frame
     bool Button(int id, const std::string& text, const Rectangle& bounds)
@@ -44,12 +44,16 @@ struct UiLibrary
         // If we are currently the hot widget
         if (id == hot)
         {
+            // Color of hot button is Yellow 
             // If the user pressed the left mouse button, that means the user started
             // interacting with this widget, so we set this widget as active
-            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            color = YELLOW;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             {
                 active = id;
+                color = GREEN;
             }
+            DrawRectangleRec(bounds, color);
         }
 
         // If the mouse cursor is hovering within our boundaries
@@ -67,8 +71,13 @@ struct UiLibrary
             hot = -1;
         }
 
-        // Draw our button regardless of what happens
-        DrawRectangleRec(bounds, GRAY);
+        if (id != hot && id != active)
+        {
+            color = GRAY;
+            // Draw button if it's not hot (awww) and active (weeee)
+            DrawRectangleRec(bounds, color);
+        }
+
         DrawText(text.c_str(), bounds.x, bounds.y, 14, BLACK);
 
         return result;
@@ -94,6 +103,10 @@ int main()
         if (ui_library.Button(1, "Hi!", { 100, 10, 80, 40 }))
         {
             std::cout << "Hi!" << std::endl;
+        }
+        if (ui_library.Button(2, "No!", { 200, 10, 80, 40 }))
+        {
+            std::cout << "No!" << std::endl;
         }
         EndDrawing();
     }
