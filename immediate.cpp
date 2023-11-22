@@ -16,7 +16,7 @@ struct UiLibrary
 
     // ID of the previous active widget
     int prev_active = -1;
-    Color color = GRAY;
+    Color color = Color{62, 181, 29, 255};
     // Creates a button with the specified text and bounds
     // Returns true if this button was clicked in this frame
     bool Button(int id, const std::string& text, const Rectangle& bounds)
@@ -49,11 +49,11 @@ struct UiLibrary
             // Color of hot button is Yellow 
             // If the user pressed the left mouse button, that means the user started
             // interacting with this widget, so we set this widget as active
-            color = YELLOW;
+            color = Color{152, 252, 124, 255};
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             {
                 active = id;
-                color = GREEN;
+                color = Color{31, 89, 15, 255};
             }
             DrawRectangleRec(bounds, color);
         }
@@ -76,12 +76,12 @@ struct UiLibrary
 
         if ((id != hot && id != active) || hot == prev_active)
         {
-            color = GRAY;
+            color = Color{62, 181, 29, 255};
             // Draw button if it's not hot (awww) and active (weeee)
             DrawRectangleRec(bounds, color);
         }
 
-        DrawText(text.c_str(), bounds.x, bounds.y, 14, BLACK);
+        DrawText(text.c_str(), bounds.x+10, bounds.y+10, 16, BLACK);
 
         return result;
     }
@@ -135,7 +135,7 @@ struct UiLibrary
             hot = -1;
         }
 
-        DrawText(text.c_str(), bounds.x, bounds.y, 14, BLACK);
+        DrawText(text.c_str(), bounds.x, bounds.y, 16, BLACK);
         return result;
     }
 };
@@ -154,21 +154,21 @@ int main()
     {
         ClearBackground(WHITE);
         BeginDrawing();
-        if (ui_library.Button(0, "Hello!", { 10, 10, 80, 40 }))
+        if (ui_library.Button(0, "800x600", { 10, 10, 80, 40 }))
         {
             if(IsWindowState(FLAG_WINDOW_RESIZABLE) == 1){
                 SetWindowSize(800,600);
             }
         }
 
-        if (ui_library.Button(1, "Hi!", { 100, 10, 80, 40 }))
+        if (ui_library.Button(1, "1280x720", { 100, 10, 80, 40 }))
         {
             if(IsWindowState(FLAG_WINDOW_RESIZABLE) == 1){
                 SetWindowSize(1280,720);
             }
         }
 
-        if (ui_library.Button(2, "No!", { 200, 10, 80, 40 }))
+        if (ui_library.Button(2, "1366x768", { 200, 10, 80, 40 }))
         {
             if(IsWindowState(FLAG_WINDOW_RESIZABLE) == 1){
                 SetWindowSize(1366, 768);
@@ -188,6 +188,7 @@ int main()
                 label_text = "[ ]Lock Screen";
             }
         }
+        
         EndDrawing();
     }
 

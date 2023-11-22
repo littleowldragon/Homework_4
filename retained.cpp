@@ -80,8 +80,8 @@ struct Button : public UIComponent
     // Draw
     void Draw() override
     {
-        DrawRectangleRec(bounds, GRAY);
-        DrawText(text.c_str(), bounds.x, bounds.y, 14, BLACK);
+        DrawRectangleRec(bounds, Color{62, 181, 29, 255});
+        DrawText(text.c_str(), bounds.x+10, bounds.y+10, 16, BLACK);
     }
 
 
