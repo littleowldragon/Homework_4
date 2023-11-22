@@ -117,7 +117,6 @@ struct Label : public UIComponent
     void Draw() override
     {
         DrawText(text.c_str(), bounds.x, bounds.y, 14, BLACK);
-
     }
 
     // Handle mouse click
@@ -130,12 +129,10 @@ struct Label : public UIComponent
         {
             if(checked == false){
                 ClearWindowState(FLAG_WINDOW_RESIZABLE);
-                std::cout << IsWindowState(FLAG_WINDOW_RESIZABLE);
                 checked=true;
             }
             else{
                 SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-                std::cout << IsWindowState(FLAG_WINDOW_RESIZABLE);
                 checked=false;
             }
             return true;
@@ -205,22 +202,20 @@ int main()
 
     while (!WindowShouldClose())
     {
-        
-        std::cout << IsWindowState(FLAG_WINDOW_RESIZABLE); 
+
         ui_library.Update();
 
         ClearBackground(WHITE);
         BeginDrawing();
         ui_library.Draw();
-         ClearBackground(RAYWHITE);
-         if(label.checked==false){
-            label.text="[ ]Lock Screen";
-         }
-         else{
-            label.text="[X]Lock Screen";
-         }
-
+        ClearBackground(RAYWHITE);
         
+        if(label.checked==false){
+            label.text="[ ]Lock Screen";
+        }
+        else{
+            label.text="[X]Lock Screen";
+        }
 
         EndDrawing();
     }
