@@ -161,21 +161,21 @@ int main()
             }
         }
 
-        if (ui_library.Button(1, "1280x720", { 100, 10, 80, 40 }))
+        if (ui_library.Button(1, "1280x720", { 110, 10, 80, 40 }))
         {
             if(IsWindowState(FLAG_WINDOW_RESIZABLE) == 1){
                 SetWindowSize(1280,720);
             }
         }
 
-        if (ui_library.Button(2, "1366x768", { 200, 10, 80, 40 }))
+        if (ui_library.Button(2, "1366x768", { 210, 10, 80, 40 }))
         {
             if(IsWindowState(FLAG_WINDOW_RESIZABLE) == 1){
                 SetWindowSize(1366, 768);
             }
         }
 
-        if (ui_library.Label(3, label_text, { 300, 10, 80, 40}))
+        if (ui_library.Label(3, label_text, { 310, 20, 80, 40}))
         {
             if(label_0_checked == false){
                 label_0_checked = true;

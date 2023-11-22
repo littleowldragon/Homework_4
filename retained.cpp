@@ -116,7 +116,7 @@ struct Label : public UIComponent
     // Draw
     void Draw() override
     {
-        DrawText(text.c_str(), bounds.x, bounds.y, 14, BLACK);
+        DrawText(text.c_str(), bounds.x, bounds.y, 16, BLACK);
     }
 
     // Handle mouse click
@@ -177,27 +177,27 @@ int main()
 
     Button button;
     button.text = "800x600";
-    button.bounds = { 120, 10, 80, 40 };
+    button.bounds = { 10, 10, 80, 40 };
     ui_library.root_container.AddChild(&button);
     button.width = 800;
     button.height= 600;
 
     Button button2;
     button2.text = "1280x720";
-    button2.bounds = { 210, 10, 80, 40 };
+    button2.bounds = { 110, 10, 80, 40 };
     ui_library.root_container.AddChild(&button2);
     button2.width=1280;
     button2.height=720;
 
     Button button3;
     button3.text = "1366x768";
-    button3.bounds = { 300, 10, 80, 40 };
+    button3.bounds = { 210, 10, 80, 40 };
     ui_library.root_container.AddChild(&button3);
     button3.width=1336;
     button3.height=768;
 
     Label label;
-    label.bounds = { 10, 20, 100, 40 };
+    label.bounds = { 310, 20, 100, 40 };
     ui_library.root_container.AddChild(&label);
 
     while (!WindowShouldClose())
@@ -209,7 +209,7 @@ int main()
         BeginDrawing();
         ui_library.Draw();
         ClearBackground(RAYWHITE);
-        
+
         if(label.checked==false){
             label.text="[ ]Lock Screen";
         }
